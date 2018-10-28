@@ -15,24 +15,19 @@ const resolvers = {
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
 });
 
-export const hello = server.createHandler();
-
-export const helloFoo: Handler = (
+export const graphqlHandler: Handler = (
     event: APIGatewayEvent,
     context: Context,
     cb: Callback
 ) => {
-    const response = {
-        statusCode: 200,
-        body: JSON.stringify({
-            message:
-                'Go Serverless Webpack (Typescript) v1.0! Your function executed successfully!',
-            input: event,
-        }),
-    };
-
-    cb(null, response);
+    const handler = server.createHandler({
+        cors: {
+            origin: '*',
+            credentials: true,
+        },
+    });
+    return handler(event, context, cb);
 };

@@ -9,9 +9,11 @@ provider:
     runtime: nodejs8.10
 
 functions:
-    hello:
-        handler: src/graphql.hello
+    graphql:
+        handler: src/graphql.graphqlHandler
         events:
             - http:
-                  method: get
-                  path: hello
+                  path: graphql
+                  method: post
+                  cors: true
+
